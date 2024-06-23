@@ -1,6 +1,6 @@
 const express=require('express');
 const app=express();
-const port=3000;
+const port=9090;
 const managers=require('c:/shahrukh/jqexpress/debtors/datalayer/managers.js');
 const entities=require('c:/shahrukh/jqexpress/debtors/datalayer/entities.js');
 
