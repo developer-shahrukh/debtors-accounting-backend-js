@@ -1,6 +1,6 @@
 const express=require('express');
 const app=express();
-const port=9090;
+const port=8080;
 const managers=require('c:/shahrukh/jqexpress/debtors/datalayer/managers.js');
 const entities=require('c:/shahrukh/jqexpress/debtors/datalayer/entities.js');
 
@@ -148,11 +148,11 @@ app.post("/updateTrader",async function(request,response){
         var contact3=request.body.contact3;
         var stateCode=request.body.stateCode;
         var code=1;
-        /* console.log(name,address,gstNum);
+        console.log(name,address,gstNum);
         console.log(accountHolderName,accountNumber,branchName,ifscCode);
         console.log(regTitle1,regValue1,regTitle2,regValue2,regTitle3,regValue3);
         console.log(contact1,contact2,contact3);
-        console.log(stateCode);*/
+        console.log(stateCode);
         var trader=new entities.Trader(code,name,address,gstNum,accountHolderName,accountNumber,branchName,ifscCode,regTitle1,regValue1,regTitle2,regValue2,regTitle3,regValue3,contact1,contact2,contact3,stateCode);
         var m=new managers.TraderManager();
         m=await m.updateTrader(trader);
