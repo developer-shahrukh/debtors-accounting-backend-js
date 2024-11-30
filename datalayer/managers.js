@@ -247,7 +247,7 @@ var i;
 for(i=0;i<item.unitOfMeasurements.length;i++)
 {
 unitOfMeasurement=item.unitOfMeasurements[i];
-
+console.log(unitOfMeasurement);
 if(!unitOfMeasurement.code || unitOfMeasurement.code<0)
 {
 unitOfMeasurement.code=0;
@@ -255,6 +255,8 @@ unitOfMeasurement.code=0;
 if(!unitOfMeasurement.name || unitOfMeasurement.name.trim().length==0)
 {
 await connection.close();
+console.log(unitOfMeasurement.code);
+console.log(unitOfMeasurement.name);
 throw "Unit of measurement name required";
 }
 if(unitOfMeasurement.name.length>5)

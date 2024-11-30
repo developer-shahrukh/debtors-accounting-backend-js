@@ -2,10 +2,10 @@ const express=require('express');
 const app=express();
 const port=8080;
 const managers=require('c:/shahrukh/jqexpress/debtors/datalayer/managers.js');
-const entities=require('c:/shahrukh/jqexpress/debtors/datalayer/entities.js');
+const entities=require('c:/shahrukh/jqexpress/debtors/datalayer/entities');
 
 app.use(express.json());
-app.use(express.static("../frontend/public"));
+app.use(express.static("D:/git/Debtors-Accounting-Application/debtors/frontend/public"));
 app.get("/",function(request,response){
 response.redirect("/index.html");
 });
@@ -23,7 +23,7 @@ app.get("/getItems",async function(request,response)
     }
     });
 
-app.get("/getUnitOfMeasurements",async function(request,response){
+app.get("/getUoms",async function(request,response){
     try
     {
         var m=new managers.UnitOfMeasurementManager();
@@ -53,9 +53,8 @@ app.post("/addUnitOfMeasurement",async function(request,response){
         var m=new managers.UnitOfMeasurementManager();
         var body=request.body;
         var name=request.body.unitOfMeasurement;
-        console.log(name);
-        //var uom=await m.addUnitOfMeasurement(name);
-        //response.send(uom);
+        var uom=await m.addUnitOfMeasurement(name);
+        response.send(uom);
     }catch(error)
     {
         response.send(error);
@@ -148,11 +147,11 @@ app.post("/updateTrader",async function(request,response){
         var contact3=request.body.contact3;
         var stateCode=request.body.stateCode;
         var code=1;
-        console.log(name,address,gstNum);
+       /* console.log(name,address,gstNum);
         console.log(accountHolderName,accountNumber,branchName,ifscCode);
         console.log(regTitle1,regValue1,regTitle2,regValue2,regTitle3,regValue3);
         console.log(contact1,contact2,contact3);
-        console.log(stateCode);
+        console.log(stateCode);*/
         var trader=new entities.Trader(code,name,address,gstNum,accountHolderName,accountNumber,branchName,ifscCode,regTitle1,regValue1,regTitle2,regValue2,regTitle3,regValue3,contact1,contact2,contact3,stateCode);
         var m=new managers.TraderManager();
         m=await m.updateTrader(trader);
@@ -179,15 +178,26 @@ app.post("/addItem",async function(request,response){
         for(var i=0;i<uoms.length;i++)
         {
             var uomName=uoms[i];
-            i++;
+            //i++;
             var uomCode=uoms[i];
+            //console.log("Uom Name : "+uomName);
+            //console.log("Uom Code : "+uomCode);
             var uom=new entities.UnitOfMeasurement(uomCode,uomName);
             unitOfMeasurements.push(uom);
         }
+        //console.log(unitOfMeasurements);
         var item=new entities.Item(code,name,hsnCode,cgst,sgst,igst,unitOfMeasurements);
+        //console.log(item);
+        try{
+        //console.log('Before add method call');
         await m.add(item);
+        //console.log('after add');
+        }catch(error){
+            console.log(error);
+        }
         var itemCode=item.code;
-        //console.log(`Item Added with code ${code}`);
+        //console.log(`Item Added with code ${itemCode}`);
+       // console.log(item);
         response.send({"success":true,"itemCode":itemCode});
     }catch(error)
     {
@@ -289,12 +299,12 @@ app.post("/updateCustomer",async function(request,response){
     }
 });
 
-app.get("/removeCustomer",async function(request,response){
+app.get("/deleteCustomer",async function(request,response){
     try
     {
         var name=request.query.name;
         var m=new managers.CustomerManager();
-        console.log(name);
+        //console.log(name);
         var responseJSON=await m.removeCustomer(name);
         response.send(responseJSON);
     }catch(error)
