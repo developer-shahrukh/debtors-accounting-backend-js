@@ -208,7 +208,9 @@ app.post("/addItem",async function(request,response){
 app.get("/deleteItemByCode",async function(request,response){
     try
     {
+        console.log("Request arrived for delete item");
         var code=request.query.code;
+        console.log(request.params.code);
         var m=new managers.ItemManager();
         var success=await m.deleteItem(code);
         response.send(success);
@@ -272,7 +274,7 @@ app.post("/addCustomer",async function(request,response){
     }
 });
 
-app.post("/updateCustomer",async function(request,response){
+app.put("/updateCustomer",async function(request,response){
     try
     {
         var body=request.body;
