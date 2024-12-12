@@ -61,13 +61,13 @@ app.post("/addUnitOfMeasurement",async function(request,response){
     }
 });
 
-app.get("/getByCode",async function(request,response){
+app.get("/getItem",async function(request,response){
 try
 {
     var m=new managers.ItemManager();
     var code=request.query.code;
     var items=await m.getByCode(code);
-    response.json(items);
+    return response.json(items);
 }catch(error)
 {
     response.send(error);
